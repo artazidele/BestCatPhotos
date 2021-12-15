@@ -16,13 +16,13 @@ class CatPhotoViewModel : ViewModel() {
     private val _photos = MutableLiveData<List<CatPhoto>>()
     val photos: LiveData<List<CatPhoto>> = _photos
     init {
-        getCatPhotos()
+        getCatPhotos("6")
     }
-    private fun getCatPhotos() {
+    fun getCatPhotos(count: String) {
         viewModelScope.launch {
             _status.value = CatApiStatus.LOADING
             try {
-                _photos.value = CatApi.retrofitService.getPhotos("4")
+                _photos.value = CatApi.retrofitService.getPhotos(count)
                 _status.value = CatApiStatus.DONE
             } catch (e: Exception) {
                 _status.value = CatApiStatus.ERROR
