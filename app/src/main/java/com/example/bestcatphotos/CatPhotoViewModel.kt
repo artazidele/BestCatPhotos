@@ -15,9 +15,9 @@ class CatPhotoViewModel : ViewModel() {
     val status: LiveData<CatApiStatus> = _status
     private val _photos = MutableLiveData<List<CatPhoto>>()
     val photos: LiveData<List<CatPhoto>> = _photos
-    init {
-        getCatPhotos("6")
-    }
+//    init {
+//        getCatPhotos("6")
+//    }
     fun getCatPhotos(count: String) {
         viewModelScope.launch {
             _status.value = CatApiStatus.LOADING
