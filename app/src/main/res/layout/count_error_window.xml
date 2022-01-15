@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rate_dialog_border">
+
+    <TextView
+        android:id="@+id/count_text_view"
+        android:layout_width="280dp"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"
+        android:textColor="@color/black"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Please choose number \n between 1 and 20!"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/count_text_view"
+        android:id="@+id/okay_button"
+        android:layout_width="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Okay"
+        android:layout_height="56dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

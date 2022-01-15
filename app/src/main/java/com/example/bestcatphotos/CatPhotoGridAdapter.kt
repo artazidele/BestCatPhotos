@@ -1,7 +1,9 @@
 package com.example.bestcatphotos
 
 import android.app.AlertDialog
+import android.content.ContentValues
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
@@ -13,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.bestcatphotos.databinding.CatPhotoItemBinding
 import com.example.bestcatphotos.model.CatPhoto
+import com.example.bestcatphotos.model.Vote
+import com.example.bestcatphotos.view.CatPhotoFragment
 
 class CatPhotoGridAdapter :
     ListAdapter<CatPhoto, CatPhotoGridAdapter.CatPhotosViewHolder>(DiffCallback) {
@@ -58,7 +62,18 @@ class CatPhotoGridAdapter :
             .load(catPhoto.url)
             .into(catImage)
         dialogView.findViewById<Button>(R.id.rate_positive_button).setOnClickListener {
-            Toast.makeText(context, "You rated positive.", Toast.LENGTH_SHORT).show()
+//            showPositive()
+//            Log.v(ContentValues.TAG, "POSITIVE")
+            val vote = Vote("test2", catPhoto.id, 1)
+            CatPhotoViewModel().makePositiveVote(vote) {
+                if (it?.image_id != null) {
+                    Log.v(ContentValues.TAG, "POSITIVE")
+                } else {
+                    Log.v(ContentValues.TAG, "ERROR")
+                }
+            }
+//            CatPhotoViewModel().makePositiveVote("test2", catPhoto.id, 1)//.makeVote(context, "test2", catPhoto.id, 1)//makeVote(context, "user", catPhoto.id, 1)
+//            Toast.makeText(context, "You rated positive.", Toast.LENGTH_SHORT).show()
         }
         dialogView.findViewById<Button>(R.id.rate_negative_button).setOnClickListener {
             Toast.makeText(context, "You rated negative.", Toast.LENGTH_SHORT).show()
@@ -67,5 +82,6 @@ class CatPhotoGridAdapter :
             alertDialog.dismiss()
         }
     }
+
 
 }
