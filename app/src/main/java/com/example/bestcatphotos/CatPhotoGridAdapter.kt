@@ -64,6 +64,8 @@ class CatPhotoGridAdapter :
         dialogView.findViewById<Button>(R.id.rate_positive_button).setOnClickListener {
 //            showPositive()
 //            Log.v(ContentValues.TAG, "POSITIVE")
+
+//            val vote = Vote("test2", "asf2", 1)
             val vote = Vote("test2", catPhoto.id, 1)
             CatPhotoViewModel().makePositiveVote(vote) {
                 if (it?.image_id != null) {

@@ -60,6 +60,7 @@ class CatPhotoViewModel : ViewModel() {
                 override fun onFailure(call: Call<Vote>, t: Throwable) {
                     onResult(null)
                     Log.v(TAG, t.message.toString())
+                    Log.v(TAG, t.stackTraceToString())
                 }
 
                 override fun onResponse(call: Call<Vote>, response: Response<Vote>) {
