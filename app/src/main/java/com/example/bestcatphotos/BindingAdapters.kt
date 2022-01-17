@@ -9,6 +9,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.bestcatphotos.model.CatPhoto
+import com.example.bestcatphotos.model.MyVote
 import com.example.bestcatphotos.model.Vote
 
 @BindingAdapter("listData")
@@ -26,10 +27,6 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
         }
     }
 }
-@BindingAdapter("vote")
-fun bindVote(textView: TextView, data: String?) {
-    textView.text = data
-}
 @BindingAdapter("catApiStatus")
 fun bindStatus(statusImageView: ImageView, status: CatApiStatus?) { //fun bindStatus(progressBar: ProgressBar, statusImageView: ImageView, status: CatApiStatus?) {
     when (status) {
@@ -44,4 +41,13 @@ fun bindStatus(statusImageView: ImageView, status: CatApiStatus?) { //fun bindSt
             statusImageView.visibility = View.GONE
         }
     }
+}
+@BindingAdapter("voteText")
+fun bindMyVote(textView: TextView, text: String?) {
+    textView.text = text
+}
+@BindingAdapter("voteData")
+fun bindVoteRecyclerView(recyclerView: RecyclerView, data: List<MyVote>?) {
+    val adapter = recyclerView.adapter as MyVoteGridAdapter
+    adapter.submitList(data)
 }

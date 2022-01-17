@@ -50,7 +50,7 @@ class CatPhotoFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.find_item -> showCountWindow()
-            R.id.find_votes -> showMyVotes("test2")
+            R.id.find_votes -> showMyVotes()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -78,28 +78,9 @@ class CatPhotoFragment : Fragment() {
         }
     }
 
-    private fun showMyVotes(userId: String) {
+    private fun showMyVotes() {
         val action = CatPhotoFragmentDirections.actionCatPhotoFragmentToMyVoteFragment()
         findNavController().navigate(action)
-
-
-
-
-//        val fragment = MyVoteFragment()
-//        val transaction = fragmentManager?.beginTransaction()
-//        transaction?.replace(R.id.nav_graph, fragment)?.commit()
-
-//        val action = CatPhotoFragmentDirections.actionCatPhotoFragmentToMyVoteFragment()
-//        findNavController().navigate(action)
-
-//        val navHostFragment =
-//            supportFragmentManager.findFragmentById(R.id.navigation) as NavHostFragment
-//        val navController = navHostFragment.navController
-
-//        var navController: NavController
-//        val action = private lateinit var navController: NavController
-//        val action = LetterListFragmentDirections.actionLetterListFragmentToWordListFragment(letter = holder.button.text.toString())
-
     }
 
     private fun displayErrorMessage() {

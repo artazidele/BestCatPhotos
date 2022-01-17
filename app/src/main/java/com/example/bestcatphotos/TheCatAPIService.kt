@@ -2,6 +2,7 @@ package com.example.bestcatphotos
 
 import com.example.bestcatphotos.model.CatPhoto
 import com.example.bestcatphotos.model.Message
+import com.example.bestcatphotos.model.MyVote
 import com.example.bestcatphotos.model.Vote
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -36,6 +37,12 @@ interface TheCatApiService {
     @POST("votes")
     @Headers("content-type: application/json", "x-api-key: 45831cb5-c900-48d4-b21d-b15ce3d1fc51")
     fun makeVote(@Body params: Vote): Call<Message>
+
+    @GET("votes")
+    @Headers("x-api-key: 45831cb5-c900-48d4-b21d-b15ce3d1fc51")
+    suspend fun getMyVotes(
+        @Query("sub_id") subId: String
+    ): List<MyVote>
 }
 
 object CatApi {

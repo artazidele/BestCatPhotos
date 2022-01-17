@@ -9,7 +9,11 @@
         android:id="@+id/myVoteFragment"
         android:name="com.example.bestcatphotos.view.MyVoteFragment"
         android:label="my_vote_fragment"
-        tools:layout="@layout/my_vote_fragment" />
+        tools:layout="@layout/my_vote_fragment" >
+        <action
+            android:id="@+id/action_myVoteFragment_to_catPhotoFragment"
+            app:destination="@id/catPhotoFragment" />
+    </fragment>
     <fragment
         android:id="@+id/catPhotoFragment"
         android:name="com.example.bestcatphotos.view.CatPhotoFragment"
