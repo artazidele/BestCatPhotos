@@ -1,9 +1,6 @@
 package com.example.bestcatphotos
 
-import com.example.bestcatphotos.model.CatPhoto
-import com.example.bestcatphotos.model.Message
-import com.example.bestcatphotos.model.MyVote
-import com.example.bestcatphotos.model.Vote
+import com.example.bestcatphotos.model.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -12,6 +9,7 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
+import java.util.*
 
 private const val API_URL = "https://api.thecatapi.com/v1/"
 
@@ -43,6 +41,13 @@ interface TheCatApiService {
     suspend fun getMyVotes(
         @Query("sub_id") subId: String
     ): List<MyVote>
+
+    @DELETE("votes/{vote_id}")
+    @Headers("x-api-key: 45831cb5-c900-48d4-b21d-b15ce3d1fc51")
+    fun deleteVote(
+        @Path("vote_id") voteId: Long
+    ): Call<DeletedVoteMessage>
+
 }
 
 object CatApi {
