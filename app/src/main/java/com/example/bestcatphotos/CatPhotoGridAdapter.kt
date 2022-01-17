@@ -62,28 +62,27 @@ class CatPhotoGridAdapter :
             .load(catPhoto.url)
             .into(catImage)
         dialogView.findViewById<Button>(R.id.rate_positive_button).setOnClickListener {
-//            showPositive()
-//            Log.v(ContentValues.TAG, "POSITIVE")
-
-//            val vote = Vote("test2", "asf2", 1)
-            val vote = Vote("test2", catPhoto.id, 1)
+            val vote = Vote(catPhoto.id,"test2",  1)
             CatPhotoViewModel().makeVote(vote) {
-                if (it?.image_id != null) {
-                    Log.v(ContentValues.TAG, "POSITIVE")
+                if (it?.imageId != null) {
+                    Toast.makeText(context, "You rated positive.", Toast.LENGTH_SHORT).show()
                 } else {
                     Log.v(ContentValues.TAG, "ERROR")
                 }
             }
-//            CatPhotoViewModel().makePositiveVote("test2", catPhoto.id, 1)//.makeVote(context, "test2", catPhoto.id, 1)//makeVote(context, "user", catPhoto.id, 1)
-//            Toast.makeText(context, "You rated positive.", Toast.LENGTH_SHORT).show()
         }
         dialogView.findViewById<Button>(R.id.rate_negative_button).setOnClickListener {
-            Toast.makeText(context, "You rated negative.", Toast.LENGTH_SHORT).show()
+            val vote = Vote(catPhoto.id,"test2",  0)
+            CatPhotoViewModel().makeVote(vote) {
+                if (it?.imageId != null) {
+                    Toast.makeText(context, "You rated negative.", Toast.LENGTH_SHORT).show()
+                } else {
+                    Log.v(ContentValues.TAG, "ERROR")
+                }
+            }
         }
         dialogView.findViewById<Button>(R.id.cancel_button).setOnClickListener {
             alertDialog.dismiss()
         }
     }
-
-
 }

@@ -1,7 +1,9 @@
 package com.example.bestcatphotos.view
 
+import android.R.attr
 import android.app.AlertDialog
 import android.content.ContentValues
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -10,10 +12,17 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.example.bestcatphotos.CatPhotoGridAdapter
 import com.example.bestcatphotos.CatPhotoViewModel
 import com.example.bestcatphotos.R
 import com.example.bestcatphotos.databinding.FragmentCatPhotoBinding
+import android.R.attr.fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.Navigation
 
 
 class CatPhotoFragment : Fragment() {
@@ -41,7 +50,7 @@ class CatPhotoFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.find_item -> showCountWindow()
-//            R.id.find_votes -> showMyVotes("user")
+            R.id.find_votes -> showMyVotes("test2")
         }
         return super.onOptionsItemSelected(item)
     }
@@ -69,10 +78,29 @@ class CatPhotoFragment : Fragment() {
         }
     }
 
-//    private fun showMyVotes(userId: String) {
-//        viewModel.getVotedPhotos(userId)
-//        binding.photosGrid.visibility = View.VISIBLE
-//    }
+    private fun showMyVotes(userId: String) {
+        val action = CatPhotoFragmentDirections.actionCatPhotoFragmentToMyVoteFragment()
+        findNavController().navigate(action)
+
+
+
+
+//        val fragment = MyVoteFragment()
+//        val transaction = fragmentManager?.beginTransaction()
+//        transaction?.replace(R.id.nav_graph, fragment)?.commit()
+
+//        val action = CatPhotoFragmentDirections.actionCatPhotoFragmentToMyVoteFragment()
+//        findNavController().navigate(action)
+
+//        val navHostFragment =
+//            supportFragmentManager.findFragmentById(R.id.navigation) as NavHostFragment
+//        val navController = navHostFragment.navController
+
+//        var navController: NavController
+//        val action = private lateinit var navController: NavController
+//        val action = LetterListFragmentDirections.actionLetterListFragmentToWordListFragment(letter = holder.button.text.toString())
+
+    }
 
     private fun displayErrorMessage() {
         val dialogView = LayoutInflater.from(context).inflate(R.layout.count_error_window, null)
@@ -84,12 +112,8 @@ class CatPhotoFragment : Fragment() {
         }
     }
 
-    public fun showPositive() {
-        Toast.makeText(context, "You rated positive.", Toast.LENGTH_SHORT).show()
-    }
-
     private fun showPhotosInCount(count: String) {
-        viewModel.getCatPhotos(count)//getVotedPhotos("test")//
+        viewModel.getCatPhotos(count)
         binding.photosGrid.visibility = View.VISIBLE
     }
 }
