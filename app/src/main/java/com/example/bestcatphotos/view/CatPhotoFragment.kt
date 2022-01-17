@@ -85,8 +85,7 @@ class CatPhotoFragment : Fragment() {
     }
 
     public fun showPositive() {
-//        Log.v(ContentValues.TAG, "POSITIVE")
-//        Toast.makeText(context, "You rated positive.", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "You rated positive.", Toast.LENGTH_SHORT).show()
     }
 
     private fun showPhotosInCount(count: String) {
