@@ -51,6 +51,7 @@ class CatPhotoFragment : Fragment() {
         when (item.itemId) {
             R.id.find_item -> showCountWindow()
             R.id.find_votes -> showMyVotes()
+            R.id.log_out -> logOut()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -80,6 +81,11 @@ class CatPhotoFragment : Fragment() {
 
     private fun showMyVotes() {
         val action = CatPhotoFragmentDirections.actionCatPhotoFragmentToMyVoteFragment()
+        findNavController().navigate(action)
+    }
+
+    private fun logOut() {
+        val action = CatPhotoFragmentDirections.actionCatPhotoFragmentToLogInFragment()
         findNavController().navigate(action)
     }
 

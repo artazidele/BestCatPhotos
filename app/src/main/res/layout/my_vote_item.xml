@@ -28,6 +28,7 @@
             android:id="@+id/count_text_view"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:visibility="invisible"
             android:layout_marginHorizontal="4dp"
             android:layout_marginVertical="4dp"
             app:voteText="@{myVote.imageId}"

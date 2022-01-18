@@ -4,4 +4,6 @@
         android:title="Find cats"/>
     <item android:id="@+id/find_votes"
         android:title="My Votes"/>
+    <item android:id="@+id/log_out"
+        android:title="Log Out"/>
 </menu>

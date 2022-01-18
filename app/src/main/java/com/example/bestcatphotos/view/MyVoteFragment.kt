@@ -1,7 +1,9 @@
 package com.example.bestcatphotos.view
 
 import android.app.AlertDialog
+import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.EditText
@@ -15,9 +17,8 @@ import com.example.bestcatphotos.databinding.MyVoteFragmentBinding
 import com.example.bestcatphotos.viewmodel.MyVoteViewModel
 
 class MyVoteFragment : Fragment() {
-
     private val viewModel: MyVoteViewModel by viewModels()
-    var _binding: MyVoteFragmentBinding? = null//FragmentMyVoteBinding? = null
+    var _binding: MyVoteFragmentBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,8 +40,14 @@ class MyVoteFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.find_item -> toPhotoFragment()
+            R.id.log_out -> logOut()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun logOut() {
+        val action = MyVoteFragmentDirections.actionMyVoteFragmentToLogInFragment()
+        findNavController().navigate(action)
     }
 
     private fun toPhotoFragment() {

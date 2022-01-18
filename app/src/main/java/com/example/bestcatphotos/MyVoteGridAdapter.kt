@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
@@ -18,6 +19,7 @@ import com.example.bestcatphotos.model.CatPhoto
 import com.example.bestcatphotos.model.MyVote
 import com.example.bestcatphotos.model.PhotoResponse
 import com.example.bestcatphotos.model.Vote
+import com.example.bestcatphotos.view.MyVoteFragment
 import com.example.bestcatphotos.viewmodel.MyVoteViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -63,7 +65,7 @@ ListAdapter<MyVote, MyVoteGridAdapter.MyVoteViewHolder>(DiffCallback) {
             }
         }
         holder.itemView.findViewById<FloatingActionButton>(R.id.delete_fab).setOnClickListener {
-            openDeleteVoteWindow(myVote, holder.itemView.context)
+            openDeleteVoteWindow(myVote, holder.itemView.context, holder)
         }
     }
     private fun openImageWindow(photoResponse: PhotoResponse, context: Context) {
@@ -79,7 +81,7 @@ ListAdapter<MyVote, MyVoteGridAdapter.MyVoteViewHolder>(DiffCallback) {
             alertDialog.dismiss()
         }
     }
-    private fun openDeleteVoteWindow(myVote: MyVote, context: Context) {
+    private fun openDeleteVoteWindow(myVote: MyVote, context: Context, holder: RecyclerView.ViewHolder) {
         val dialogView = LayoutInflater.from(context).inflate(R.layout.delete_vote_window, null)
         val builder = AlertDialog.Builder(context)
             .setView(dialogView)
@@ -88,6 +90,8 @@ ListAdapter<MyVote, MyVoteGridAdapter.MyVoteViewHolder>(DiffCallback) {
             MyVoteViewModel().deleteVote(myVote) {
                 if (it?.imageId != null) {
                     Toast.makeText(context, "Your vote is deleted.", Toast.LENGTH_SHORT).show()
+                    alertDialog.dismiss()
+                    holder.itemView.visibility = View.GONE
                 } else {
                     Log.v(ContentValues.TAG, "ERROR")
                 }

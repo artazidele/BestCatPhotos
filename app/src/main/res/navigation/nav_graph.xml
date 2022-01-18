@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/catPhotoFragment">
+    app:startDestination="@id/logInFragment">
 
     <fragment
         android:id="@+id/myVoteFragment"
@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_myVoteFragment_to_catPhotoFragment"
             app:destination="@id/catPhotoFragment" />
+        <action
+            android:id="@+id/action_myVoteFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
     </fragment>
     <fragment
         android:id="@+id/catPhotoFragment"
@@ -21,5 +24,28 @@
         <action
             android:id="@+id/action_catPhotoFragment_to_myVoteFragment"
             app:destination="@id/myVoteFragment" />
+        <action
+            android:id="@+id/action_catPhotoFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/logInFragment"
+        android:name="com.example.bestcatphotos.view.LogInFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_logInFragment_to_signUpFragment2"
+            app:destination="@id/signUpFragment2" />
+        <action
+            android:id="@+id/action_logInFragment_to_catPhotoFragment"
+            app:destination="@id/catPhotoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment2"
+        android:name="com.example.bestcatphotos.view.SignUpFragment"
+        android:label="SignUpFragment" >
+        <action
+            android:id="@+id/action_signUpFragment2_to_logInFragment"
+            app:destination="@id/logInFragment" />
     </fragment>
 </navigation>
