@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.example.bestcatphotos.databinding.MyVoteItemBinding
 import com.example.bestcatphotos.model.CatPhoto
 import com.example.bestcatphotos.model.MyVote
+import com.example.bestcatphotos.model.PhotoResponse
 import com.example.bestcatphotos.model.Vote
 import com.example.bestcatphotos.viewmodel.MyVoteViewModel
 
@@ -24,8 +25,13 @@ ListAdapter<MyVote, MyVoteGridAdapter.MyVoteViewHolder>(DiffCallback) {
     class MyVoteViewHolder(
         private var binding: MyVoteItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(myVote: MyVote) {
+        fun bind(myVote: MyVote, catPhoto: PhotoResponse) {
             binding.myVote = myVote
+            binding.executePendingBindings()
+//        }
+//        fun bindImage(catPhoto: CatPhoto) {
+            binding.catPhoto = catPhoto
+            binding.viewModel = MyVoteViewModel()//.getPhoto(myVote.imageId)
             binding.executePendingBindings()
         }
     }
@@ -48,7 +54,20 @@ ListAdapter<MyVote, MyVoteGridAdapter.MyVoteViewHolder>(DiffCallback) {
     }
     override fun onBindViewHolder(holder: MyVoteViewHolder, position: Int) {
         val myVote = getItem(position)
-        holder.bind(myVote)
+//        val catPhoto = MyVoteViewModel().getPhoto(myVote.imageId)
+        MyVoteViewModel().getPhoto(myVote.imageId) {
+            if (it?.url != null) {
+                val photoResponse = PhotoResponse(it.url)
+                holder.bind(myVote, photoResponse)
+//                Toast.makeText(context, "You rated positive.", Toast.LENGTH_SHORT).show()
+//            } else {
+//                Log.v(ContentValues.TAG, "ERROR")
+            }
+        }
+
+//        if (catPhoto != null) {
+//            holder.bind(myVote, catPhoto)
+//        }
         holder.itemView.setOnClickListener {
             openDeleteVoteWindow(myVote, holder.itemView.context)
         }
@@ -58,10 +77,15 @@ ListAdapter<MyVote, MyVoteGridAdapter.MyVoteViewHolder>(DiffCallback) {
         val builder = AlertDialog.Builder(context)
             .setView(dialogView)
         val alertDialog = builder.show()
+
+
+
+
+
         dialogView.findViewById<Button>(R.id.delete_button).setOnClickListener {
             MyVoteViewModel().deleteVote(myVote) {
                 if (it?.imageId != null) {
-                    Toast.makeText(context, "Your vote deleted.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Your vote is deleted.", Toast.LENGTH_SHORT).show()
                 } else {
                     Log.v(ContentValues.TAG, "ERROR")
                 }

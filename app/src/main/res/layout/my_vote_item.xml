@@ -12,6 +12,11 @@
         <variable
             name="myVote"
             type="com.example.bestcatphotos.model.MyVote" />
+
+        <variable
+            name="catPhoto"
+            type="com.example.bestcatphotos.model.PhotoResponse" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,6 +35,21 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageView
+
+            android:id="@+id/cat_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginVertical="4dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:imageIdUrl="@{catPhoto.url}"
+            app:layout_constraintTop_toBottomOf="@id/count_text_view"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,7 @@ import coil.load
 import com.example.bestcatphotos.model.CatPhoto
 import com.example.bestcatphotos.model.MyVote
 import com.example.bestcatphotos.model.Vote
+import com.example.bestcatphotos.viewmodel.MyVoteViewModel
 
 @BindingAdapter("listData")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<CatPhoto>?) {
@@ -50,4 +51,14 @@ fun bindMyVote(textView: TextView, text: String?) {
 fun bindVoteRecyclerView(recyclerView: RecyclerView, data: List<MyVote>?) {
     val adapter = recyclerView.adapter as MyVoteGridAdapter
     adapter.submitList(data)
+}
+@BindingAdapter("imageIdUrl")
+fun bindImageId(imgView: ImageView, imgId: String?) {
+    imgId?.let {
+        val imgUri = imgId.toUri().buildUpon().scheme("https").build()
+        imgView.load(imgUri) {
+            placeholder(R.drawable.circle_animation)
+            error(R.drawable.pet_icon)
+        }
+    }
 }

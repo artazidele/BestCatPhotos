@@ -48,6 +48,12 @@ interface TheCatApiService {
         @Path("vote_id") voteId: Long
     ): Call<DeletedVoteMessage>
 
+    @GET("images/{image_id}")
+    @Headers("x-api-key: 45831cb5-c900-48d4-b21d-b15ce3d1fc51")
+    fun getPhotoForUrl(
+        @Path("image_id") id: String
+    ): Call<PhotoResponse>
+
 }
 
 object CatApi {

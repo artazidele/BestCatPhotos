@@ -7,18 +7,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bestcatphotos.CatApi
-import com.example.bestcatphotos.model.DeletedVoteMessage
-import com.example.bestcatphotos.model.Message
-import com.example.bestcatphotos.model.MyVote
-import com.example.bestcatphotos.model.Vote
+import com.example.bestcatphotos.model.*
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.http.Url
 
 class MyVoteViewModel : ViewModel() {
     private val _votes = MutableLiveData<List<MyVote>>()
     val votes: LiveData<List<MyVote>> = _votes
+//    private val _photo = MutableLiveData<PhotoResponse>()
+//    val photo: LiveData<PhotoResponse> = _photo
+    var photo = PhotoResponse("")
     fun getMyVotes() {
         viewModelScope.launch {
             try {
@@ -41,5 +42,41 @@ class MyVoteViewModel : ViewModel() {
                 }
             }
         )
+    }
+    fun getPhoto(imageId: String, onResult: (PhotoResponse?) -> Unit) {
+        CatApi.retrofitService.getPhotoForUrl(imageId).enqueue(
+            object : Callback<PhotoResponse> {
+                override fun onResponse(
+                    call: Call<PhotoResponse>,
+                    response: Response<PhotoResponse>
+                ) {
+                    photo = response.body()!!
+                    onResult(photo)
+                }
+
+                override fun onFailure(call: Call<PhotoResponse>, t: Throwable) {
+                    onResult(null)
+                }
+//                override fun onFailure(call: Call<PhotoResponse>, t: Throwable) {
+//                    onResult(null)
+//                }
+//
+//                override fun onResponse(call: Call<PhotoResponse>, response: Response<PhotoResponse>) {
+//                    photo = response.body()
+//                    onResult(photo)
+//                }
+            }
+        )
+
+
+
+
+//        viewModelScope.launch {
+//            try {
+//                _photo.value = CatApi.retrofitService.getPhotoForUrl(imageId)
+//            } catch (e: Exception) {
+////                _photo.value = listOf()
+//            }
+//        }
     }
 }
