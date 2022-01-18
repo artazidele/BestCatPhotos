@@ -1,28 +1,19 @@
 package com.example.bestcatphotos.view
 
-import android.R.attr
 import android.app.AlertDialog
-import android.content.ContentValues
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.bestcatphotos.CatPhotoGridAdapter
 import com.example.bestcatphotos.CatPhotoViewModel
 import com.example.bestcatphotos.R
 import com.example.bestcatphotos.databinding.FragmentCatPhotoBinding
-import android.R.attr.fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import androidx.navigation.Navigation
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 
 class CatPhotoFragment : Fragment() {
@@ -85,6 +76,7 @@ class CatPhotoFragment : Fragment() {
     }
 
     private fun logOut() {
+        Firebase.auth.signOut()
         val action = CatPhotoFragmentDirections.actionCatPhotoFragmentToLogInFragment()
         findNavController().navigate(action)
     }

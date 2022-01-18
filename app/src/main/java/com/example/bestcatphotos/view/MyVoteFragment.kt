@@ -14,7 +14,10 @@ import com.example.bestcatphotos.CatPhotoGridAdapter
 import com.example.bestcatphotos.MyVoteGridAdapter
 import com.example.bestcatphotos.R
 import com.example.bestcatphotos.databinding.MyVoteFragmentBinding
+import com.example.bestcatphotos.model.Vote
 import com.example.bestcatphotos.viewmodel.MyVoteViewModel
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class MyVoteFragment : Fragment() {
     private val viewModel: MyVoteViewModel by viewModels()
@@ -25,9 +28,10 @@ class MyVoteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = MyVoteFragmentBinding.inflate(inflater)
+        val user = Firebase.auth.currentUser
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        viewModel.getMyVotes()
+        viewModel.getMyVotes(user?.uid.toString())
         binding.votesGrid.adapter = MyVoteGridAdapter()
         setHasOptionsMenu(true)
         return binding.root
@@ -46,6 +50,7 @@ class MyVoteFragment : Fragment() {
     }
 
     private fun logOut() {
+        Firebase.auth.signOut()
         val action = MyVoteFragmentDirections.actionMyVoteFragmentToLogInFragment()
         findNavController().navigate(action)
     }

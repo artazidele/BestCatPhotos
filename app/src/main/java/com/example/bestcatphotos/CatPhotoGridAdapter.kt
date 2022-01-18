@@ -18,6 +18,8 @@ import com.example.bestcatphotos.model.CatPhoto
 import com.example.bestcatphotos.model.Vote
 import com.example.bestcatphotos.view.CatPhotoFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class CatPhotoGridAdapter :
     ListAdapter<CatPhoto, CatPhotoGridAdapter.CatPhotosViewHolder>(DiffCallback) {
@@ -63,7 +65,8 @@ class CatPhotoGridAdapter :
             .load(catPhoto.url)
             .into(catImage)
         dialogView.findViewById<FloatingActionButton>(R.id.rate_positive_button).setOnClickListener {
-            val vote = Vote(catPhoto.id,"test2",  1)
+            val user = Firebase.auth.currentUser
+            val vote = Vote(catPhoto.id, user?.uid.toString(),  1)
             CatPhotoViewModel().makeVote(vote) {
                 if (it?.imageId != null) {
                     Toast.makeText(context, "You rated positive.", Toast.LENGTH_SHORT).show()
@@ -73,7 +76,8 @@ class CatPhotoGridAdapter :
             }
         }
         dialogView.findViewById<FloatingActionButton>(R.id.rate_negative_button).setOnClickListener {
-            val vote = Vote(catPhoto.id,"test2",  0)
+            val user = Firebase.auth.currentUser
+            val vote = Vote(catPhoto.id, user?.uid.toString(),  0)
             CatPhotoViewModel().makeVote(vote) {
                 if (it?.imageId != null) {
                     Toast.makeText(context, "You rated negative.", Toast.LENGTH_SHORT).show()

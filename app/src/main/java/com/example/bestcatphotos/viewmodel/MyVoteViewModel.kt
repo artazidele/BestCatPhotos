@@ -15,10 +15,10 @@ class MyVoteViewModel : ViewModel() {
     private val _votes = MutableLiveData<List<MyVote>>()
     val votes: LiveData<List<MyVote>> = _votes
     var photo = PhotoResponse("")
-    fun getMyVotes() {
+    fun getMyVotes(userId: String) {
         viewModelScope.launch {
             try {
-                _votes.value = CatApi.retrofitService.getMyVotes("test2")
+                _votes.value = CatApi.retrofitService.getMyVotes(userId)
             } catch (e: Exception) {
                 _votes.value = listOf()
             }

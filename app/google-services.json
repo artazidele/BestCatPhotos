@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "135304293179",
+    "project_id": "bestcatphotos-340bf",
+    "storage_bucket": "bestcatphotos-340bf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:135304293179:android:f6596491752247f0ade51e",
+        "android_client_info": {
+          "package_name": "com.example.bestcatphotos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "135304293179-32elhp4f0hlkahcrbhv782f9j63ip05q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2dnmO9xKy7SWccM3GwxqUXtM9eB5fH7E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "135304293179-32elhp4f0hlkahcrbhv782f9j63ip05q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
