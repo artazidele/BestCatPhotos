@@ -1,6 +1,7 @@
 package com.example.bestcatphotos
 
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -12,6 +13,7 @@ import com.example.bestcatphotos.model.CatPhoto
 import com.example.bestcatphotos.model.MyVote
 import com.example.bestcatphotos.model.Vote
 import com.example.bestcatphotos.viewmodel.MyVoteViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 @BindingAdapter("listData")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<CatPhoto>?) {
@@ -60,5 +62,13 @@ fun bindImageId(imgView: ImageView, imgId: String?) {
             placeholder(R.drawable.circle_animation)
             error(R.drawable.pet_icon)
         }
+    }
+}
+@BindingAdapter("voteImage")
+fun bindVoteImage(button: FloatingActionButton, value: Int) {
+    if (value == 0) {
+        button.setImageResource(R.drawable.thumb_down_icon)
+    } else {
+        button.setImageResource(R.drawable.thumb_up_icon)
     }
 }

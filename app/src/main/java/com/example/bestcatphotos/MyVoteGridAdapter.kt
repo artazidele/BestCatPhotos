@@ -19,6 +19,7 @@ import com.example.bestcatphotos.model.MyVote
 import com.example.bestcatphotos.model.PhotoResponse
 import com.example.bestcatphotos.model.Vote
 import com.example.bestcatphotos.viewmodel.MyVoteViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MyVoteGridAdapter:
 ListAdapter<MyVote, MyVoteGridAdapter.MyVoteViewHolder>(DiffCallback) {
@@ -28,10 +29,8 @@ ListAdapter<MyVote, MyVoteGridAdapter.MyVoteViewHolder>(DiffCallback) {
         fun bind(myVote: MyVote, catPhoto: PhotoResponse) {
             binding.myVote = myVote
             binding.executePendingBindings()
-//        }
-//        fun bindImage(catPhoto: CatPhoto) {
             binding.catPhoto = catPhoto
-            binding.viewModel = MyVoteViewModel()//.getPhoto(myVote.imageId)
+            binding.viewModel = MyVoteViewModel()
             binding.executePendingBindings()
         }
     }
@@ -54,22 +53,30 @@ ListAdapter<MyVote, MyVoteGridAdapter.MyVoteViewHolder>(DiffCallback) {
     }
     override fun onBindViewHolder(holder: MyVoteViewHolder, position: Int) {
         val myVote = getItem(position)
-//        val catPhoto = MyVoteViewModel().getPhoto(myVote.imageId)
         MyVoteViewModel().getPhoto(myVote.imageId) {
             if (it?.url != null) {
                 val photoResponse = PhotoResponse(it.url)
                 holder.bind(myVote, photoResponse)
-//                Toast.makeText(context, "You rated positive.", Toast.LENGTH_SHORT).show()
-//            } else {
-//                Log.v(ContentValues.TAG, "ERROR")
+                holder.itemView.setOnClickListener {
+                    openImageWindow(photoResponse, holder.itemView.context)
+                }
             }
         }
-
-//        if (catPhoto != null) {
-//            holder.bind(myVote, catPhoto)
-//        }
-        holder.itemView.setOnClickListener {
+        holder.itemView.findViewById<FloatingActionButton>(R.id.delete_fab).setOnClickListener {
             openDeleteVoteWindow(myVote, holder.itemView.context)
+        }
+    }
+    private fun openImageWindow(photoResponse: PhotoResponse, context: Context) {
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.just_photo_window, null)
+        val builder = AlertDialog.Builder(context)
+            .setView(dialogView)
+        val alertDialog = builder.show()
+        val catImage = dialogView.findViewById<ImageView>(R.id.cat_image_view)
+        Glide.with(context)
+            .load(photoResponse.url)
+            .into(catImage)
+        dialogView.findViewById<Button>(R.id.cancel_button).setOnClickListener {
+            alertDialog.dismiss()
         }
     }
     private fun openDeleteVoteWindow(myVote: MyVote, context: Context) {
@@ -77,11 +84,6 @@ ListAdapter<MyVote, MyVoteGridAdapter.MyVoteViewHolder>(DiffCallback) {
         val builder = AlertDialog.Builder(context)
             .setView(dialogView)
         val alertDialog = builder.show()
-
-
-
-
-
         dialogView.findViewById<Button>(R.id.delete_button).setOnClickListener {
             MyVoteViewModel().deleteVote(myVote) {
                 if (it?.imageId != null) {

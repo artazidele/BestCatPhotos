@@ -1,7 +1,5 @@
 package com.example.bestcatphotos.viewmodel
 
-import android.content.ContentValues
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,13 +10,10 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.http.Url
 
 class MyVoteViewModel : ViewModel() {
     private val _votes = MutableLiveData<List<MyVote>>()
     val votes: LiveData<List<MyVote>> = _votes
-//    private val _photo = MutableLiveData<PhotoResponse>()
-//    val photo: LiveData<PhotoResponse> = _photo
     var photo = PhotoResponse("")
     fun getMyVotes() {
         viewModelScope.launch {
@@ -29,6 +24,7 @@ class MyVoteViewModel : ViewModel() {
             }
         }
     }
+
     fun deleteVote(myVote: MyVote, onResult: (MyVote?) -> Unit) {
         CatApi.retrofitService.deleteVote(myVote.id).enqueue(
             object : Callback<DeletedVoteMessage> {
@@ -36,13 +32,17 @@ class MyVoteViewModel : ViewModel() {
                     onResult(null)
                 }
 
-                override fun onResponse(call: Call<DeletedVoteMessage>, response: Response<DeletedVoteMessage>) {
+                override fun onResponse(
+                    call: Call<DeletedVoteMessage>,
+                    response: Response<DeletedVoteMessage>
+                ) {
                     val deletedVote = myVote
                     onResult(deletedVote)
                 }
             }
         )
     }
+
     fun getPhoto(imageId: String, onResult: (PhotoResponse?) -> Unit) {
         CatApi.retrofitService.getPhotoForUrl(imageId).enqueue(
             object : Callback<PhotoResponse> {
@@ -57,26 +57,7 @@ class MyVoteViewModel : ViewModel() {
                 override fun onFailure(call: Call<PhotoResponse>, t: Throwable) {
                     onResult(null)
                 }
-//                override fun onFailure(call: Call<PhotoResponse>, t: Throwable) {
-//                    onResult(null)
-//                }
-//
-//                override fun onResponse(call: Call<PhotoResponse>, response: Response<PhotoResponse>) {
-//                    photo = response.body()
-//                    onResult(photo)
-//                }
             }
         )
-
-
-
-
-//        viewModelScope.launch {
-//            try {
-//                _photo.value = CatApi.retrofitService.getPhotoForUrl(imageId)
-//            } catch (e: Exception) {
-////                _photo.value = listOf()
-//            }
-//        }
     }
 }

@@ -17,6 +17,7 @@ import com.example.bestcatphotos.databinding.CatPhotoItemBinding
 import com.example.bestcatphotos.model.CatPhoto
 import com.example.bestcatphotos.model.Vote
 import com.example.bestcatphotos.view.CatPhotoFragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class CatPhotoGridAdapter :
     ListAdapter<CatPhoto, CatPhotoGridAdapter.CatPhotosViewHolder>(DiffCallback) {
@@ -61,7 +62,7 @@ class CatPhotoGridAdapter :
         Glide.with(context)
             .load(catPhoto.url)
             .into(catImage)
-        dialogView.findViewById<Button>(R.id.rate_positive_button).setOnClickListener {
+        dialogView.findViewById<FloatingActionButton>(R.id.rate_positive_button).setOnClickListener {
             val vote = Vote(catPhoto.id,"test2",  1)
             CatPhotoViewModel().makeVote(vote) {
                 if (it?.imageId != null) {
@@ -71,7 +72,7 @@ class CatPhotoGridAdapter :
                 }
             }
         }
-        dialogView.findViewById<Button>(R.id.rate_negative_button).setOnClickListener {
+        dialogView.findViewById<FloatingActionButton>(R.id.rate_negative_button).setOnClickListener {
             val vote = Vote(catPhoto.id,"test2",  0)
             CatPhotoViewModel().makeVote(vote) {
                 if (it?.imageId != null) {
