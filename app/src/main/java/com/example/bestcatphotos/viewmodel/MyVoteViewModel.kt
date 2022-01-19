@@ -5,21 +5,32 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bestcatphotos.CatApi
+import com.example.bestcatphotos.CatApiStatus
 import com.example.bestcatphotos.model.*
+import com.example.bestcatphotos.view.MyVoteFragment
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+enum class VoteStatus { LOADING, ERROR, DONE }
+
 class MyVoteViewModel : ViewModel() {
     private val _votes = MutableLiveData<List<MyVote>>()
     val votes: LiveData<List<MyVote>> = _votes
     var photo = PhotoResponse("")
+    private val _status = MutableLiveData<VoteStatus>()
+    val status: LiveData<VoteStatus> = _status
     fun getMyVotes(userId: String) {
+        _status.value = VoteStatus.LOADING
         viewModelScope.launch {
             try {
                 _votes.value = CatApi.retrofitService.getMyVotes(userId)
+                _status.value = VoteStatus.DONE
             } catch (e: Exception) {
+                _status.value = VoteStatus.ERROR
                 _votes.value = listOf()
             }
         }

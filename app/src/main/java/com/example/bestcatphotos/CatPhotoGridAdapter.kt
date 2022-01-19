@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -55,6 +56,17 @@ class CatPhotoGridAdapter :
             openImageWindow(catPhoto, holder.itemView.context)
         }
     }
+    private fun openErrorWindow(context: Context) {
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.count_error_window, null)
+        val builder = AlertDialog.Builder(context)
+            .setView(dialogView)
+        val alertDialog = builder.show()
+        val errorMessage = "Something went wrong. Try again later."
+        dialogView.findViewById<TextView>(R.id.count_text_view).text = errorMessage
+        dialogView.findViewById<Button>(R.id.okay_button).setOnClickListener {
+            alertDialog.dismiss()
+        }
+    }
     private fun openImageWindow(catPhoto: CatPhoto, context: Context) {
         val dialogView = LayoutInflater.from(context).inflate(R.layout.rate_cat_photo_window, null)
         val builder = AlertDialog.Builder(context)
@@ -64,24 +76,39 @@ class CatPhotoGridAdapter :
         Glide.with(context)
             .load(catPhoto.url)
             .into(catImage)
+        var votedTimes = 0
         dialogView.findViewById<FloatingActionButton>(R.id.rate_positive_button).setOnClickListener {
+            votedTimes += 1
             val user = Firebase.auth.currentUser
             val vote = Vote(catPhoto.id, user?.uid.toString(),  1)
             CatPhotoViewModel().makeVote(vote) {
                 if (it?.imageId != null) {
+                    votedTimes = 0
                     Toast.makeText(context, "You rated positive.", Toast.LENGTH_SHORT).show()
+                } else if (votedTimes == 3) {
+                    openErrorWindow(context)
+                    dialogView.findViewById<FloatingActionButton>(R.id.rate_positive_button).isEnabled = false
+                    dialogView.findViewById<FloatingActionButton>(R.id.rate_negative_button).isEnabled = false
                 } else {
+                    Toast.makeText(context, "Try again.", Toast.LENGTH_SHORT).show()
                     Log.v(ContentValues.TAG, "ERROR")
                 }
             }
         }
         dialogView.findViewById<FloatingActionButton>(R.id.rate_negative_button).setOnClickListener {
+            votedTimes += 1
             val user = Firebase.auth.currentUser
             val vote = Vote(catPhoto.id, user?.uid.toString(),  0)
             CatPhotoViewModel().makeVote(vote) {
                 if (it?.imageId != null) {
+                    votedTimes = 0
                     Toast.makeText(context, "You rated negative.", Toast.LENGTH_SHORT).show()
+                } else if (votedTimes == 3) {
+                    openErrorWindow(context)
+                    dialogView.findViewById<FloatingActionButton>(R.id.rate_positive_button).isEnabled = false
+                    dialogView.findViewById<FloatingActionButton>(R.id.rate_negative_button).isEnabled = false
                 } else {
+                    Toast.makeText(context, "Try again.", Toast.LENGTH_SHORT).show()
                     Log.v(ContentValues.TAG, "ERROR")
                 }
             }

@@ -33,6 +33,9 @@ class MyVoteFragment : Fragment() {
         binding.viewModel = viewModel
         viewModel.getMyVotes(user?.uid.toString())
         binding.votesGrid.adapter = MyVoteGridAdapter()
+        binding.statusRetry.setOnClickListener {
+            showMyVotes()
+        }
         setHasOptionsMenu(true)
         return binding.root
     }
@@ -58,5 +61,10 @@ class MyVoteFragment : Fragment() {
     private fun toPhotoFragment() {
         val action = MyVoteFragmentDirections.actionMyVoteFragmentToCatPhotoFragment()
         findNavController().navigate(action)
+    }
+
+    public fun showMyVotes() {
+        val userId = Firebase.auth.currentUser?.uid.toString()
+        viewModel.getMyVotes(userId)
     }
 }

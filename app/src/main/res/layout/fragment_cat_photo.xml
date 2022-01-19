@@ -30,14 +30,33 @@
             app:spanCount="2"
             tools:listitem="@layout/cat_photo_item" />
 
-        <ImageView
+        <TextView
             android:id="@+id/status_image"
+            android:gravity="center"
+            android:visibility="invisible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/red_900"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:catApiStatus="@{viewModel.status}" />
+
+        <Button
+            android:id="@+id/status_retry"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/white"
+            android:padding="0dp"
+            android:drawableTop="@drawable/ic_baseline_restore_24"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/status_image"
+            app:catApiIconStatus="@{viewModel.status}" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -13,6 +13,7 @@ import com.example.bestcatphotos.model.CatPhoto
 import com.example.bestcatphotos.model.MyVote
 import com.example.bestcatphotos.model.Vote
 import com.example.bestcatphotos.viewmodel.MyVoteViewModel
+import com.example.bestcatphotos.viewmodel.VoteStatus
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 @BindingAdapter("listData")
@@ -30,18 +31,48 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
         }
     }
 }
+//@BindingAdapter("catApiStatus")
+//fun bindStatus(statusImageView: ImageView, status: CatApiStatus?) {
+//    when (status) {
+//        CatApiStatus.LOADING -> {
+//            statusImageView.visibility = View.GONE
+//        }
+//        CatApiStatus.ERROR -> {
+//            statusImageView.visibility = View.VISIBLE
+//            statusImageView.setImageResource(R.drawable.ic_connection_error)
+//        }
+//        CatApiStatus.DONE -> {
+//            statusImageView.visibility = View.GONE
+//        }
+//    }
+//}
 @BindingAdapter("catApiStatus")
-fun bindStatus(statusImageView: ImageView, status: CatApiStatus?) { //fun bindStatus(progressBar: ProgressBar, statusImageView: ImageView, status: CatApiStatus?) {
+fun bindStatus(statusTextView: TextView, status: CatApiStatus?) {
     when (status) {
         CatApiStatus.LOADING -> {
-            statusImageView.visibility = View.GONE
+            statusTextView.visibility = View.VISIBLE
+            statusTextView.text = "Loading..."
         }
         CatApiStatus.ERROR -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.ic_connection_error)
+            statusTextView.visibility = View.VISIBLE
+            statusTextView.text = "No Internet connection."
         }
         CatApiStatus.DONE -> {
-            statusImageView.visibility = View.GONE
+            statusTextView.visibility = View.GONE
+        }
+    }
+}
+@BindingAdapter("catApiIconStatus")
+fun bindIconStatus(statusTextView: Button, status: CatApiStatus?) {
+    when (status) {
+        CatApiStatus.LOADING -> {
+            statusTextView.visibility = View.GONE
+        }
+        CatApiStatus.ERROR -> {
+            statusTextView.visibility = View.VISIBLE
+        }
+        CatApiStatus.DONE -> {
+            statusTextView.visibility = View.GONE
         }
     }
 }
@@ -70,5 +101,35 @@ fun bindVoteImage(button: FloatingActionButton, value: Int) {
         button.setImageResource(R.drawable.thumb_down_icon)
     } else {
         button.setImageResource(R.drawable.thumb_up_icon)
+    }
+}
+@BindingAdapter("voteStatus")
+fun bindVoteStatus(statusTextView: TextView, status: VoteStatus?) {
+    when (status) {
+        VoteStatus.LOADING -> {
+            statusTextView.visibility = View.VISIBLE
+            statusTextView.text = "Loading..."
+        }
+        VoteStatus.ERROR -> {
+            statusTextView.visibility = View.VISIBLE
+            statusTextView.text = "No Internet connection."
+        }
+        VoteStatus.DONE -> {
+            statusTextView.visibility = View.GONE
+        }
+    }
+}
+@BindingAdapter("voteIconStatus")
+fun bindVoteIconStatus(statusTextView: Button, status: VoteStatus?) {
+    when (status) {
+        VoteStatus.LOADING -> {
+            statusTextView.visibility = View.GONE
+        }
+        VoteStatus.ERROR -> {
+            statusTextView.visibility = View.VISIBLE
+        }
+        VoteStatus.DONE -> {
+            statusTextView.visibility = View.GONE
+        }
     }
 }

@@ -30,6 +30,9 @@ class CatPhotoFragment : Fragment() {
         binding.viewModel = viewModel
         binding.photosGrid.adapter = CatPhotoGridAdapter()
         binding.photosGrid.visibility = View.INVISIBLE
+        binding.statusRetry.setOnClickListener {
+            showCountWindow()
+        }
         setHasOptionsMenu(true)
         return binding.root
     }
