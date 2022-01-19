@@ -10,6 +10,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.app.NotificationCompat.getColor
+import androidx.core.content.ContextCompat.getColor
+import androidx.core.content.res.ResourcesCompat.getColor
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +24,7 @@ import com.example.bestcatphotos.model.PhotoResponse
 import com.example.bestcatphotos.model.Vote
 import com.example.bestcatphotos.view.MyVoteFragment
 import com.example.bestcatphotos.viewmodel.MyVoteViewModel
+import com.google.android.material.color.MaterialColors.getColor
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MyVoteGridAdapter:
@@ -89,9 +93,11 @@ ListAdapter<MyVote, MyVoteGridAdapter.MyVoteViewHolder>(DiffCallback) {
         dialogView.findViewById<Button>(R.id.delete_button).setOnClickListener {
             MyVoteViewModel().deleteVote(myVote) {
                 if (it?.imageId != null) {
+                    holder.itemView.findViewById<FloatingActionButton>(R.id.vote_fab).visibility = View.GONE
+                    holder.itemView.findViewById<FloatingActionButton>(R.id.delete_fab).visibility = View.GONE
+                    holder.itemView.findViewById<ImageView>(R.id.cat_image).setImageResource(R.drawable.delete_icon)
                     Toast.makeText(context, "Your vote is deleted.", Toast.LENGTH_SHORT).show()
                     alertDialog.dismiss()
-                    holder.itemView.visibility = View.GONE
                 } else {
                     Log.v(ContentValues.TAG, "ERROR")
                 }
