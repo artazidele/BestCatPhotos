@@ -2,6 +2,7 @@ package com.example.bestcatphotos.view
 
 import android.app.AlertDialog
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -18,6 +19,7 @@ import com.example.bestcatphotos.model.Vote
 import com.example.bestcatphotos.viewmodel.MyVoteViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import okhttp3.internal.wait
 
 class MyVoteFragment : Fragment() {
     private val viewModel: MyVoteViewModel by viewModels()
@@ -32,6 +34,20 @@ class MyVoteFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         viewModel.getMyVotes(user?.uid.toString())
+
+
+//        val allMessages = viewModel.list
+//        Log.d(TAG, allMessages.size().toString)
+//        if (allMessages != null) {
+////            for (message in allMessages) {
+////
+////            }
+////            querySnapshot.wait()
+////            for (document in querySnapshot)
+//        viewModel.printMessagesMessage()
+//        }
+
+
         binding.votesGrid.adapter = MyVoteGridAdapter()
         binding.statusRetry.setOnClickListener {
             showMyVotes()

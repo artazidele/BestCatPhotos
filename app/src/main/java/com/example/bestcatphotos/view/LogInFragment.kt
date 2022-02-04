@@ -8,13 +8,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.load.engine.executor.GlideExecutor.UncaughtThrowableStrategy.LOG
 import com.example.bestcatphotos.databinding.FragmentLogInBinding
+import com.example.bestcatphotos.viewmodel.MyVoteViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class LogInFragment : Fragment() {
+    private val viewModel: MyVoteViewModel by viewModels()
     private lateinit var auth: FirebaseAuth
     private var _binding: FragmentLogInBinding? = null
     private val binding get() = _binding!!
@@ -24,6 +29,22 @@ class LogInFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentLogInBinding.inflate(inflater)
+
+
+        viewModel.getMyMessages()
+//        viewModel.printSnap()
+//        viewModel.getMyMessages()
+//        viewModel.printMessagesMessage()
+//        viewModel.getMyMessages()
+//        viewModel.list.observe(this.viewLifecycleOwner, Observer { it ->
+//            if (it != null) {
+//                it.count()
+//                viewModel.printMessagesMessage(it.count().toString())
+//                viewModel.printMessagesMessage("NOT NULL NOT NULL NOT NULL")
+//            } else {
+//                viewModel.printMessagesMessage("NULL NULL NULL")
+//            }
+//        })
         binding.toSignUp.setOnClickListener {
             toSignUp()
         }
