@@ -13,51 +13,51 @@ import com.google.firebase.firestore.ktx.toObject
 import okhttp3.internal.wait
 
 class FirebaseMessage {
-    val db = FirebaseFirestore.getInstance()
-
-//    suspend fun getAllMessages(): Task<QuerySnapshot> {
-//        return db.collection("Message").get()//.wait()
+//    val db = FirebaseFirestore.getInstance()
+//
+////    suspend fun getAllMessages(): Task<QuerySnapshot> {
+////        return db.collection("Message").get()//.wait()
+////    }
+//
+//    suspend fun getQuerySnap(): Task<QuerySnapshot> {
+//        return db.collection("Message").get()
 //    }
-
-    suspend fun getQuerySnap(): Task<QuerySnapshot> {
-        return db.collection("Message").get()
-    }
-    suspend fun getAllMessages(): ArrayList<MessageF> {
-
-        var itemList: ArrayList<MessageF> = ArrayList()
-        db.collection("Message")
-            .get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    val message = document.toObject<MessageF>()
-                    itemList.add(message)
-                }
-            }
-            .wait()
-//        Log.d(TAG, "TRY TRY TRY TRY TRY")
-//        val itemListToReturn: List<MessageF> = itemList
-        for (item in itemList) {
-            Log.d(TAG, item.message)
-        }
-        return itemList//ToReturn
-    }
-
-    suspend fun updateMessages() {
-        var itemList: ArrayList<MessageF> = ArrayList()
-        db.collection("Message")
-            .get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    val message = document.toObject<MessageF>()
-                    itemList.add(message)
-                }
-                val itemListToReturn: List<MessageF> = itemList
-                MyVoteViewModel().updateMessagesTrue(itemListToReturn)
-            }
-            .addOnFailureListener {
-                MyVoteViewModel().notUpdateMessages()
-            }
-    }
-
+//    suspend fun getAllMessages(): ArrayList<MessageF> {
+//
+//        var itemList: ArrayList<MessageF> = ArrayList()
+//        db.collection("Message")
+//            .get()
+//            .addOnSuccessListener { documents ->
+//                for (document in documents) {
+//                    val message = document.toObject<MessageF>()
+//                    itemList.add(message)
+//                }
+//            }
+//            .wait()
+////        Log.d(TAG, "TRY TRY TRY TRY TRY")
+////        val itemListToReturn: List<MessageF> = itemList
+//        for (item in itemList) {
+//            Log.d(TAG, item.message)
+//        }
+//        return itemList//ToReturn
+//    }
+//
+//    suspend fun updateMessages() {
+//        var itemList: ArrayList<MessageF> = ArrayList()
+//        db.collection("Message")
+//            .get()
+//            .addOnSuccessListener { documents ->
+//                for (document in documents) {
+//                    val message = document.toObject<MessageF>()
+//                    itemList.add(message)
+//                }
+//                val itemListToReturn: List<MessageF> = itemList
+//                MyVoteViewModel().updateMessagesTrue(itemListToReturn)
+//            }
+//            .addOnFailureListener {
+//                MyVoteViewModel().notUpdateMessages()
+//            }
+//    }
+//
 
 }

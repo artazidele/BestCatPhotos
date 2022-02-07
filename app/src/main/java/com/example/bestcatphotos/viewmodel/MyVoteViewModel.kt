@@ -26,11 +26,13 @@ class MyVoteViewModel : ViewModel() {
 
     private val _list = MutableLiveData<ArrayList<MessageF>>()//MutableLiveData<List<Message>>()
     val list: LiveData<ArrayList<MessageF>> = _list
-    private val _querySnap = MutableLiveData<Task<QuerySnapshot>>()
-    val querySnapshot: LiveData<Task<QuerySnapshot>> = _querySnap
 
-    private val _listF = MutableLiveData<List<MessageF>>()
-    val listF: LiveData<List<MessageF>> = _listF
+
+//    private val _querySnap = MutableLiveData<Task<QuerySnapshot>>()
+//    val querySnapshot: LiveData<Task<QuerySnapshot>> = _querySnap
+//
+//    private val _listF = MutableLiveData<List<MessageF>>()
+//    val listF: LiveData<List<MessageF>> = _listF
 
 
 
@@ -53,47 +55,47 @@ class MyVoteViewModel : ViewModel() {
         }
     }
 
-    fun getMyMessages() {
-        _status.value = VoteStatus.LOADING
-        viewModelScope.launch {
-            try {
-                FirebaseMessage().updateMessages()
-//                _querySnap.value = FirebaseMessage().getQuerySnap()
-//                _list.value = FirebaseMessage().getAllMessages()
+//    fun getMyMessages() {
+//        _status.value = VoteStatus.LOADING
+//        viewModelScope.launch {
+//            try {
+//                FirebaseMessage().updateMessages()
+////                _querySnap.value = FirebaseMessage().getQuerySnap()
+////                _list.value = FirebaseMessage().getAllMessages()
+//
+//
+////                _votes.value = CatApi.retrofitService.getMyVotes(userId)
+////                _status.value = VoteStatus.DONE
+//            } catch (e: Exception) {
+////                _list.value = arrayListOf()
+//
+//
+//
+////                _status.value = VoteStatus.ERROR
+////                _votes.value = listOf()
+//            }
+//        }
+//    }
+
+//    fun printSnap() {
+//        Log.d(TAG, "QUERY QUERY QUERY" + querySnapshot.toString())
+//    }
+//
+//    fun printMessagesMessage(message: String) {
+////        list.observe()
+//        if (list != null) {
+//            Log.d(TAG, message)
+//        }
+//    }
 
 
-//                _votes.value = CatApi.retrofitService.getMyVotes(userId)
-//                _status.value = VoteStatus.DONE
-            } catch (e: Exception) {
-//                _list.value = arrayListOf()
-
-
-
-//                _status.value = VoteStatus.ERROR
-//                _votes.value = listOf()
-            }
-        }
-    }
-
-    fun printSnap() {
-        Log.d(TAG, "QUERY QUERY QUERY" + querySnapshot.toString())
-    }
-
-    fun printMessagesMessage(message: String) {
-//        list.observe()
-        if (list != null) {
-            Log.d(TAG, message)
-        }
-    }
-
-
-    fun updateMessagesTrue(listMF: List<MessageF>) {
-        _listF.value = listMF
-        Log.d(TAG, "POSITIVE POSITIVE POSITIVE")
-    }
-    fun notUpdateMessages() {
-        _listF.value = listOf()
-    }
+//    fun updateMessagesTrue(listMF: List<MessageF>) {
+//        _listF.value = listMF
+//        Log.d(TAG, "POSITIVE POSITIVE POSITIVE")
+//    }
+//    fun notUpdateMessages() {
+//        _listF.value = listOf()
+//    }
 
 
 

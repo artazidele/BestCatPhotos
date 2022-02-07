@@ -19,7 +19,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class LogInFragment : Fragment() {
-    private val viewModel: MyVoteViewModel by viewModels()
+//    private val viewModel: MyVoteViewModel by viewModels()
     private lateinit var auth: FirebaseAuth
     private var _binding: FragmentLogInBinding? = null
     private val binding get() = _binding!!
@@ -31,7 +31,7 @@ class LogInFragment : Fragment() {
         _binding = FragmentLogInBinding.inflate(inflater)
 
 
-        viewModel.getMyMessages()
+//        viewModel.getMyMessages()
 //        viewModel.printSnap()
 //        viewModel.getMyMessages()
 //        viewModel.printMessagesMessage()
