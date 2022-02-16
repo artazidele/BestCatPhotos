@@ -15,6 +15,7 @@ import com.example.bestcatphotos.CatPhotoGridAdapter
 import com.example.bestcatphotos.MyVoteGridAdapter
 import com.example.bestcatphotos.R
 import com.example.bestcatphotos.databinding.MyVoteFragmentBinding
+import com.example.bestcatphotos.model.MyVote
 import com.example.bestcatphotos.model.Vote
 import com.example.bestcatphotos.viewmodel.MyVoteViewModel
 import com.google.firebase.auth.ktx.auth
@@ -48,7 +49,8 @@ class MyVoteFragment : Fragment() {
 //        }
 
 
-        binding.votesGrid.adapter = MyVoteGridAdapter()
+        var data = viewModel.getMyVotes(user?.uid.toString()) //= ArrayList<MyVote>() // = viewModel.getMyVotes(user?.uid.toString())
+        binding.votesGrid.adapter = MyVoteGridAdapter()//(data)
         binding.statusRetry.setOnClickListener {
             showMyVotes()
         }

@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.core.app.NotificationCompat.getColor
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.content.res.ResourcesCompat.getColor
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -26,8 +27,9 @@ import com.example.bestcatphotos.view.MyVoteFragment
 import com.example.bestcatphotos.viewmodel.MyVoteViewModel
 import com.google.android.material.color.MaterialColors.getColor
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import okhttp3.internal.notify
 
-class MyVoteGridAdapter:
+class MyVoteGridAdapter: //class MyVoteGridAdapter(private val data: ArrayList<MyVote>)://class MyVoteGridAdapter(data: LiveData<MyVote>):
 ListAdapter<MyVote, MyVoteGridAdapter.MyVoteViewHolder>(DiffCallback) {
     class MyVoteViewHolder(
         private var binding: MyVoteItemBinding
@@ -57,6 +59,12 @@ ListAdapter<MyVote, MyVoteGridAdapter.MyVoteViewHolder>(DiffCallback) {
             MyVoteItemBinding.inflate(LayoutInflater.from(parent.context))
         )
     }
+
+//    private fun getDataCount(): Int = data.size
+    override fun getItemCount(): Int {
+//        return data.size
+        return super.getItemCount()
+    }
     override fun onBindViewHolder(holder: MyVoteViewHolder, position: Int) {
         val myVote = getItem(position)
         MyVoteViewModel().getPhoto(myVote.imageId) {
@@ -69,7 +77,7 @@ ListAdapter<MyVote, MyVoteGridAdapter.MyVoteViewHolder>(DiffCallback) {
             }
         }
         holder.itemView.findViewById<FloatingActionButton>(R.id.delete_fab).setOnClickListener {
-            openDeleteVoteWindow(myVote, holder.itemView.context, holder)
+            openDeleteVoteWindow(position, myVote, holder.itemView.context, holder)
         }
     }
     private fun openImageWindow(photoResponse: PhotoResponse, context: Context) {
@@ -85,7 +93,7 @@ ListAdapter<MyVote, MyVoteGridAdapter.MyVoteViewHolder>(DiffCallback) {
             alertDialog.dismiss()
         }
     }
-    private fun openDeleteVoteWindow(myVote: MyVote, context: Context, holder: RecyclerView.ViewHolder) {
+    private fun openDeleteVoteWindow(position: Int, myVote: MyVote, context: Context, holder: RecyclerView.ViewHolder) {
         val dialogView = LayoutInflater.from(context).inflate(R.layout.delete_vote_window, null)
         val builder = AlertDialog.Builder(context)
             .setView(dialogView)
@@ -93,6 +101,12 @@ ListAdapter<MyVote, MyVoteGridAdapter.MyVoteViewHolder>(DiffCallback) {
         dialogView.findViewById<Button>(R.id.delete_button).setOnClickListener {
             MyVoteViewModel().deleteVote(myVote) {
                 if (it?.imageId != null) {
+//                    data.removeAt(position)
+//                    notifyItemRemoved(position)
+//                    synchronized(holder.itemView){
+////                        holder.itemView.notify()
+//                    }
+
                     holder.itemView.findViewById<FloatingActionButton>(R.id.vote_fab).visibility = View.GONE
                     holder.itemView.findViewById<FloatingActionButton>(R.id.delete_fab).visibility = View.GONE
                     holder.itemView.findViewById<ImageView>(R.id.cat_image).setImageResource(R.drawable.delete_icon)
